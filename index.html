@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Deepuu ❤️</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Scene 1 Intro -->
+  <section id="intro" class="scene active">
+    <div class="floating-hearts"></div>
+
+    <div class="intro-content">
+      <h1>Hey Deepuu ❤️</h1>
+      <p id="typewriter"></p>
+      <button id="startBtn">Begin Journey</button>
+    </div>
+  </section>
+
+  <!-- Scene 2 Gate -->
+  <section id="gate" class="scene hidden">
+    <div class="gate-container">
+      <h1>Unlock My Heart ❤️</h1>
+      <p>Only Capy can unlock this heart...</p>
+
+      <div class="heart-gate">
+        <div class="chain chain1"></div>
+        <div class="chain chain2"></div>
+        <div class="chain chain3"></div>
+        <div class="chain chain4"></div>
+        <div class="chain chain5"></div>
+        <div class="lock">🔒</div>
+      </div>
+
+      <button id="startQuiz">Unlock</button>
+    </div>
+  </section>
+
+  <!-- Scene 3 Quiz -->
+<section id="quiz" class="scene hidden">
+  <div class="card">
+    <h2 id="questionText"></h2>
+    <div id="answerBoxes" class="answer-boxes"></div>
+    <button id="submitAnswer">Submit</button>
+  </div>
+</section>
+
+  <!-- Scene 4 Riddles -->
+ <section id="riddle" class="scene hidden">
+  <div class="card">
+    <h2 id="riddleText"></h2>
+    <div id="riddleBoxes" class="answer-boxes"></div>
+    <button id="submitRiddle">Submit</button>
+  </div>
+</section>
+
+  <!-- Scene 5 Quotes -->
+  <section id="quotes" class="scene hidden">
+    <div class="card">
+      <h1 id="quoteText"></h1>
+      <button id="nextQuote">Next</button>
+    </div>
+  </section>
+
+  <!-- Scene 6 Surprise -->
+  <section id="surprise" class="scene hidden">
+    <div class="card">
+      <h1>One Last Surprise ❤️</h1>
+      <button id="surpriseBtn">Open My Heart</button>
+    </div>
+  </section>
+
+  <!-- Scene 7 Final -->
+  <section id="final" class="scene hidden">
+    <div class="card final-card">
+      <img src="assets/images/final.jpg" alt="Our Memory" id="finalImage">
+      <h1>Happy Anniversary Deepuu ❤️</h1>
+      <p>
+        Thank you for being part of my life.<br>
+        I love you endlessly Capy ❤️
+      </p>
+    </div>
+  </section>
+
+  <div id="successPopup" class="success-popup hidden">
+  ❤️ Correct ❤️
+</div>
+
+<audio id="successSound" src="assets/music/success.mp3"></audio>
+<audio id="bgMusic" src="assets/music/bg.mp3" loop></audio>
+<audio id="finalMusic" src="assets/music/final.mp3"></audio>
+<audio id="clickSound" src="assets/music/click.mp3"></audio>
+  
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,6 @@
 const scenes = {
   intro: document.getElementById("intro"),
   gate: document.getElementById("gate"),
-  quiz: document.getElementById("quiz"),
   riddle: document.getElementById("riddle"),
   quotes: document.getElementById("quotes"),
   surprise: document.getElementById("surprise"),
@@ -13,18 +12,7 @@ const bgMusic = document.getElementById("bgMusic");
 const clickSound = document.getElementById("clickSound");
 const finalMusic = document.getElementById("finalMusic");
 
-let chainCount = 1;
-
-/* ---------- HELPERS ---------- */
-function playClick() {
-  clickSound.currentTime = 0;
-  clickSound.play();
-}
-
-document.querySelectorAll("button").forEach(btn => {
-  btn.addEventListener("click", playClick);
-});
-
+/* ---------------- SCENE ---------------- */
 function showScene(sceneName) {
   Object.values(scenes).forEach(scene => {
     scene.classList.remove("active");
@@ -34,6 +22,32 @@ function showScene(sceneName) {
   scenes[sceneName].classList.remove("hidden");
   scenes[sceneName].classList.add("active");
 }
+
+function playClick() {
+  clickSound.currentTime = 0;
+  clickSound.play();
+}
+
+document.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("click", playClick);
+});
+
+/* ---------------- TYPEWRITER ---------------- */
+const typewriter = document.getElementById("typewriter");
+const introText = "I made something special only for you...";
+let introIndex = 0;
+
+function typeEffect() {
+  if (introIndex < introText.length) {
+    typewriter.innerHTML += introText.charAt(introIndex);
+    introIndex++;
+    setTimeout(typeEffect, 60);
+  }
+}
+typeEffect();
+
+/* ---------------- SUCCESS ---------------- */
+let chainCount = 1;
 
 function showSuccess() {
   successPopup.classList.remove("hidden");
@@ -48,17 +62,18 @@ function showSuccess() {
   setTimeout(() => {
     successPopup.classList.add("hidden");
     successPopup.classList.remove("correct-anim");
-  }, 1000);
+  }, 1200);
 }
 
 function showError() {
-  document.querySelector(".card").classList.add("shake");
+  document.querySelector(".question-card").classList.add("shake");
 
   setTimeout(() => {
-    document.querySelector(".card").classList.remove("shake");
+    document.querySelector(".question-card").classList.remove("shake");
   }, 400);
 }
 
+/* ---------------- MUSIC ---------------- */
 function fadeOutMusic(audio, callback) {
   let fade = setInterval(() => {
     if (audio.volume > 0.05) {
@@ -72,63 +87,27 @@ function fadeOutMusic(audio, callback) {
   }, 150);
 }
 
-/* ---------- TYPEWRITER ---------- */
-const typewriter = document.getElementById("typewriter");
-const introText = "I made something special only for you...";
-let introIndex = 0;
-
-function typeEffect() {
-  if (introIndex < introText.length) {
-    typewriter.innerHTML += introText.charAt(introIndex);
-    introIndex++;
-    setTimeout(typeEffect, 60);
-  }
-}
-typeEffect();
-
-/* ---------- QUESTIONS ---------- */
+/* ---------------- QUESTIONS ---------------- */
 const questions = [
-  {
-    q: "What nickname do I call you?",
-    word: "CAPY",
-    reveal: [0, 2]
-  },
-  {
-    q: "What date changed our story forever?",
-    word: "2606",
-    reveal: [0, 1, 3]
-  },
-  {
-    q: "What speaks to my heart?",
-    word: "LOVE",
-    reveal: [0, 2]
-  }
+  { q: "What nickname do I call you?", word: "CAPY", reveal: [0, 2] },
+  { q: "What date changed our story forever?", word: "2606", reveal: [0, 1, 3] },
+  { q: "What speaks to my heart?", word: "LOVE", reveal: [0, 2] },
+  { q: "Who do I love the most?", word: "DEEPUU", reveal: [0, 2, 3] },
+  { q: "What do I give only to you?", word: "HEART", reveal: [0, 2, 4] }
 ];
 
 let currentQuestion = 0;
 
-/* ---------- RIDDLES ---------- */
+/* ---------------- RIDDLES ---------------- */
 const riddles = [
-  {
-    q: "I am not a word, yet I speak to your heart. What am I?",
-    word: "LOVE",
-    reveal: [0, 2]
-  },
-  {
-    q: "What comes once in a minute and twice in a moment?",
-    word: "M",
-    reveal: []
-  },
-  {
-    q: "What becomes stronger with every challenge?",
-    word: "LOVE",
-    reveal: [1, 3]
-  }
+  { q: "I am not a word, yet I speak to your heart. What am I?", word: "LOVE", reveal: [0, 2] },
+  { q: "What comes once in a minute and twice in a moment?", word: "M", reveal: [] },
+  { q: "What becomes stronger with every challenge?", word: "LOVE", reveal: [1, 3] }
 ];
 
 let currentRiddle = 0;
 
-/* ---------- QUOTES ---------- */
+/* ---------------- QUOTES ---------------- */
 const quotes = [
   "In every universe, I would still choose you ❤️",
   "You are my favorite hello ❤️",
@@ -139,7 +118,7 @@ const quotes = [
 
 let currentQuote = 0;
 
-/* ---------- BOXES ---------- */
+/* ---------------- BOX RENDER ---------------- */
 function renderBoxes(word, reveal, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
@@ -164,7 +143,7 @@ function renderBoxes(word, reveal, containerId) {
   }
 }
 
-/* ---------- QUIZ ---------- */
+/* ---------------- QUESTION FLOW ---------------- */
 function loadQuestion() {
   const current = questions[currentQuestion];
   document.getElementById("questionText").innerText = current.q;
@@ -174,7 +153,6 @@ function loadQuestion() {
 document.getElementById("submitAnswer").addEventListener("click", () => {
   const current = questions[currentQuestion];
   let finalWord = "";
-
   const inputs = document.querySelectorAll("#answerBoxes input");
   let inputMap = {};
 
@@ -201,13 +179,13 @@ document.getElementById("submitAnswer").addEventListener("click", () => {
         showScene("riddle");
         loadRiddle();
       }
-    }, 1200);
+    }, 1500);
   } else {
     showError();
   }
 });
 
-/* ---------- RIDDLE ---------- */
+/* ---------------- RIDDLE FLOW ---------------- */
 function loadRiddle() {
   const current = riddles[currentRiddle];
   document.getElementById("riddleText").innerText = current.q;
@@ -234,7 +212,6 @@ document.getElementById("submitRiddle").addEventListener("click", () => {
   }
 
   if (finalWord === current.word) {
-    showSuccess();
     currentRiddle++;
 
     setTimeout(() => {
@@ -244,13 +221,11 @@ document.getElementById("submitRiddle").addEventListener("click", () => {
         showScene("quotes");
         loadQuote();
       }
-    }, 1200);
-  } else {
-    showError();
+    }, 1000);
   }
 });
 
-/* ---------- QUOTES ---------- */
+/* ---------------- QUOTES ---------------- */
 function loadQuote() {
   document.getElementById("quoteText").innerText = quotes[currentQuote];
 }
@@ -265,14 +240,10 @@ document.getElementById("nextQuote").addEventListener("click", () => {
   }
 });
 
-/* ---------- BUTTON EVENTS ---------- */
+/* ---------------- BUTTONS ---------------- */
 document.getElementById("startBtn").addEventListener("click", () => {
   bgMusic.play();
   showScene("gate");
-});
-
-document.getElementById("startQuiz").addEventListener("click", () => {
-  showScene("quiz");
   loadQuestion();
 });
 

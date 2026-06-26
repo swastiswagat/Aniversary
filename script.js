@@ -24,8 +24,10 @@ function showScene(sceneName) {
 }
 
 function playClick() {
-  clickSound.currentTime = 0;
-  clickSound.play();
+  if (clickSound) {
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
 }
 
 document.querySelectorAll("button").forEach(btn => {
@@ -50,8 +52,10 @@ typeEffect();
 let chainCount = 1;
 
 function showSuccess() {
-  successPopup.classList.remove("hidden");
-  successPopup.classList.add("correct-anim");
+  if (successPopup) {
+    successPopup.classList.remove("hidden");
+    successPopup.classList.add("correct-anim");
+  }
 
   const chain = document.querySelector(`.chain${chainCount}`);
   if (chain) {
@@ -60,16 +64,21 @@ function showSuccess() {
   }
 
   setTimeout(() => {
-    successPopup.classList.add("hidden");
-    successPopup.classList.remove("correct-anim");
+    if (successPopup) {
+      successPopup.classList.add("hidden");
+      successPopup.classList.remove("correct-anim");
+    }
   }, 1200);
 }
 
 function showError() {
-  document.querySelector(".question-card").classList.add("shake");
+  const card = document.querySelector(".question-card");
+  if (!card) return;
+
+  card.classList.add("shake");
 
   setTimeout(() => {
-    document.querySelector(".question-card").classList.remove("shake");
+    card.classList.remove("shake");
   }, 400);
 }
 
@@ -195,7 +204,6 @@ function loadRiddle() {
 document.getElementById("submitRiddle").addEventListener("click", () => {
   const current = riddles[currentRiddle];
   let finalWord = "";
-
   const inputs = document.querySelectorAll("#riddleBoxes input");
   let inputMap = {};
 
@@ -242,24 +250,39 @@ document.getElementById("nextQuote").addEventListener("click", () => {
 
 /* ---------------- BUTTONS ---------------- */
 document.getElementById("startBtn").addEventListener("click", () => {
-  bgMusic.play();
+  if (bgMusic) bgMusic.play();
   showScene("gate");
   loadQuestion();
 });
 
 document.getElementById("surpriseBtn").addEventListener("click", () => {
   fadeOutMusic(bgMusic, () => {
-    finalMusic.volume = 0;
-    finalMusic.play();
+    if (finalMusic) {
+      finalMusic.volume = 0;
+      finalMusic.play();
 
-    let fadeIn = setInterval(() => {
-      if (finalMusic.volume < 0.95) {
-        finalMusic.volume += 0.05;
-      } else {
-        clearInterval(fadeIn);
-      }
-    }, 150);
+      let fadeIn = setInterval(() => {
+        if (finalMusic.volume < 0.95) {
+          finalMusic.volume += 0.05;
+        } else {
+          clearInterval(fadeIn);
+        }
+      }, 150);
+    }
 
     showScene("final");
   });
 });
+
+/* ---------------- VIDEO ---------------- */
+const videoBtn = document.getElementById("videoBtn");
+
+if (videoBtn) {
+  videoBtn.addEventListener("click", () => {
+    document.getElementById("photoSection").classList.add("hidden");
+    document.getElementById("videoSection").classList.remove("hidden");
+
+    const video = document.getElementById("loveVideo");
+    if (video) video.play();
+  });
+}

@@ -101,7 +101,7 @@ const questions = [
   { q: "What nickname do I call you?", word: "CAPY", reveal: [0, 2] },
   { q: "What date changed our story forever?", word: "2606", reveal: [0, 1, 3] },
   { q: "What speaks to my heart?", word: "LOVE", reveal: [0, 2] },
-  { q: "Who do I love the most?", word: "DEEPUU", reveal: [0, 2, 3] },
+  { q: "Who do I love the most?", word: "DEEPU", reveal: [0, 2, 2] },
   { q: "What do I give only to you?", word: "HEART", reveal: [0, 2, 4] }
 ];
 
